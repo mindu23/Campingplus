@@ -100,6 +100,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent LogoutIntent = new Intent(this, MainActivity.class);
                 startActivity(LogoutIntent);
                 break;
+            case R.id.btn_list_host:
+                Toast.makeText(this, "list button click", Toast.LENGTH_SHORT).show();
+                Intent ListIntent = new Intent(this, MainActivity.class);
+                startActivity(ListIntent);
+                break;
+            case R.id.btn_myPage_host:
+                Toast.makeText(this, "myPage button click", Toast.LENGTH_SHORT).show();
+                Intent myPageHostIntent = new Intent(this, MainActivity.class);
+                startActivity(myPageHostIntent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
