@@ -26,7 +26,6 @@
         android:layout_marginBottom="24dp"
         android:ems="10"
         android:hint="이름"
-        android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/editText_join_id"
         app:layout_constraintEnd_toEndOf="@+id/check_button" />
 
@@ -61,11 +60,24 @@
         android:id="@+id/editText_join_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="240dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="24dp"
         android:ems="10"
         android:hint="이메일"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/editText_join_phone"
+        app:layout_constraintStart_toStartOf="@+id/editText_join_id" />
+
+    <EditText
+        android:id="@+id/editText_join_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="50dp"
+        android:ems="10"
+        android:hint="휴대전화"
+        app:layout_constraintBottom_toBottomOf="@id/checkbox_host"
         app:layout_constraintStart_toStartOf="@+id/editText_join_id" />
 
     <EditText
@@ -77,7 +89,6 @@
         android:layout_marginBottom="24dp"
         android:ems="10"
         android:hint="아이디"
-        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/editText_join_password"
         app:layout_constraintEnd_toStartOf="@+id/check_button"
         app:layout_constraintStart_toStartOf="@+id/editText_join_name" />
@@ -93,6 +104,18 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/editText_join_id"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <CheckBox
+        android:id="@+id/checkbox_host"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="캠핑장 관리자"
+        android:textSize="20dp"
+        android:layout_marginBottom="150dp"
+        android:ems="10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/editText_join_id"
+        />
+
     <Button
         android:id="@+id/button_join_delete"
         style="@style/defaultButton"
@@ -103,7 +126,7 @@
         android:layout_marginTop="71dp"
         android:text="취소"
         app:layout_constraintStart_toEndOf="@+id/button_join_insert"
-        app:layout_constraintTop_toBottomOf="@+id/editText_join_email" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_join_phone" />
 
     <Button
         android:id="@+id/button_join_insert"
