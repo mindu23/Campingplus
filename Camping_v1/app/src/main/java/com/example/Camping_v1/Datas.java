@@ -1,16 +1,17 @@
 package com.example.Camping_v1;
 
 import android.provider.ContactsContract;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 class UserData {
     String UserNum;
     String UserName;
     String UserId;
     String UserPassword;
-    //String UserPasswordCheck;
-    String USerEmail;
+    String UserEmail;
     String UserPhoneNum;
-    Boolean Admin;
+    String Host;
 
 
     //put
@@ -18,38 +19,49 @@ class UserData {
         putUserName(user.UserName);
         putUserId(user.UserId);
         putUserPassword(user.UserPassword);
-        //putUserPasswordCheck(user.UserPasswordCheck);
-        putUserEmail(user.USerEmail);
+        putUserEmail(user.UserEmail);
         putUserPhoneNum(user.UserPhoneNum);
-        putAdmin(user.Admin);
+        putAdmin(user.Host);
+    }
+
+    public void putUserData(JSONObject jsonObject){
+        try {
+            UserName = jsonObject.getString( "UserName" );
+            UserId = jsonObject.getString( "UserId" );
+            UserPassword = jsonObject.getString( "UserPwd" );
+            UserEmail = jsonObject.getString( "UserEmail" );
+            UserPhoneNum = jsonObject.getString( "UserPhone" );
+            Host = jsonObject.getString( "host" );
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public UserData getUserData(){
+        return this;
+    }
+    public void putUserNum(String Num){
+        UserNum = Num;
     }
     public void putUserName(String Name){
         UserName=Name;
     }
-    public  void putUserNum(String Num){
-        UserNum = Num;
-    }
-    public  void putUserId(String Id){
+    public void putUserId(String Id){
         UserId = Id;
     }
-    public  void putUserPassword(String Password){
+    public void putUserPassword(String Password){
         UserPassword = Password;
     }
-    public void putAdmin(Boolean admin){Admin = admin;}
-    //public  void putUserPasswordCheck(String PasswordCheck){
-    //    UserPasswordCheck = PasswordCheck;
-    //}
     public  void putUserEmail(String Email){
-        USerEmail = Email;
+        UserEmail = Email;
     }
     public  void putUserPhoneNum(String PhoneNumber){
         UserPhoneNum = PhoneNumber;
     }
+    public void putAdmin(String host){Host = host;}
 
     //get
-    public UserData getUserData(){
-        return this;
-    }
     public String getUserNum(){
         return UserNum;
     }
@@ -63,9 +75,10 @@ class UserData {
         return UserPassword;
     }
     public String getUSerEmail(){
-        return USerEmail;
+        return UserEmail;
     }
-
+    public String getUserPhoneNum() { return UserPhoneNum;}
+    public String getAdmin(){return Host;}
 }
 
 class ReservationData {

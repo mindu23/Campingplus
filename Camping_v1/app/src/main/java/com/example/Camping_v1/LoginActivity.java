@@ -29,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.setTitle("로그인");
-        ab.setDisplayHomeAsUpEnabled(true);
         ab.setDisplayShowCustomEnabled(true);
 
         login_id = findViewById( R.id.editText_login_id );
@@ -43,9 +42,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity( intent );
             }
         });
-
-
-        login_button = findViewById( R.id.button_login );
 
         login_button = findViewById( R.id.button_login );
         login_button.setOnClickListener( new View.OnClickListener() {
@@ -64,25 +60,15 @@ public class LoginActivity extends AppCompatActivity {
                             if(success) {//로그인 성공시
 
                                 UserData userData = new UserData();
-                                userData.putUserName(jsonObject.getString( "UserName" ));
-                                userData.putUserId(jsonObject.getString( "UserId" ));
-                                userData.putUserPassword(jsonObject.getString( "UserPwd" ));
-                                userData.putUserNum(jsonObject.getString( "UserNum" ));
+                                userData.putUserData(jsonObject);
+                                userData.getUserData();
 
+                                //userData.putUserName(jsonObject.getString( "UserName" ));
                                 //String UserId = jsonObject.getString( "UserId" );
-                                //String UserPwd = jsonObject.getString( "UserPwd" );
-                                //String UserName = jsonObject.getString( "UserName" );
-                                //String UserNum = jsonObject.getString( "UserNum" );
 
                                 Toast.makeText( getApplicationContext(), String.format("%s님 환영합니다.", userData.UserName), Toast.LENGTH_SHORT ).show();
                                 Intent intent = new Intent( LoginActivity.this, MainActivity.class );
-
-                                intent.putExtra( "UserId", userData.getUserId() );
-                                intent.putExtra( "UserPassword", userData.getUserPassword() );
-                                intent.putExtra( "UserName", userData.getUserName() );
                                 intent.putExtra( "UserNum", userData.getUserNum() );
-
-
                                 startActivity( intent );
 
                             } else {//로그인 실패시

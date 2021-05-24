@@ -89,6 +89,7 @@ public class JoinActivity extends AppCompatActivity {
                 String joinEmail = mEditTextEmail.getText().toString();
                 String joinPhone = mEditTextPhone.getText().toString();
                 Boolean joinCheckBox = mEditCheckBoxHost.isChecked();
+
                 String joinCheckBoxHost;
                 if(joinCheckBox == Boolean.TRUE) {
                     joinCheckBoxHost = "1";
