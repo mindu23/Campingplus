@@ -15,14 +15,14 @@ import com.example.Camping_v1.R;
 
 import java.util.ArrayList;
 
-public class ViewPagerAdapter extends PagerAdapter {
+public class MainViewPageControl extends PagerAdapter {
 
     private Context Context;
     private LayoutInflater layoutInflater;
     private Integer[] images = {R.drawable.camping1, R.drawable.camping2, R.drawable.camping3, R.drawable.camping4};
 
 
-    public ViewPagerAdapter(Context context){
+    public MainViewPageControl(Context context){
         this.Context = context;
     }
 

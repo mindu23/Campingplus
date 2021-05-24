@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.Camping_v1.R;
-
 public class MainActivity extends AppCompatActivity {
 
     ViewPager viewPager;
@@ -35,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = (ViewPager)findViewById(R.id.viewPager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+        MainViewPageControl viewPagerAdapter = new MainViewPageControl(this);
         viewPager.setAdapter(viewPagerAdapter);
 
         //userdata 받아오기 Intenet에서
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         button_image_load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddPhotoActivity.class);
+                Intent intent = new Intent(MainActivity.this, CampUploadActivity.class);
                 startActivity(intent);
             }
         });

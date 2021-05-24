@@ -2,7 +2,7 @@ package com.example.Camping_v1;
 
 import android.graphics.drawable.Drawable;
 
-public class ListViewItem {
+public class ListViewData {
     private Drawable iconDrawable ;
     private String titleStr ;
     private String descStr ;

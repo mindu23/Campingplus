@@ -81,8 +81,31 @@ class UserData {
     public String getAdmin(){return Host;}
 }
 
+
+class CampUploadData{
+    String CampNum;
+    String HostNum; //host의 usernum
+    String CampName;
+    String CampAddress;
+    String CampPhone;
+    String CampKakao;
+    String AccountNum;
+    String CampTime;
+    String CampExtra;
+}
+
+
+
 class ReservationData {
+    String ReservationNum;
     String UserNum;
-    String UserEmail;
+    String UserName;
+    String CampNum;
+    String HostNum;
+    String HostPhoneNum;
     String UserPhoneNum;
+    String CampName;
+    String date;
+    String CampAddress;
+    String AccountNum;
 }

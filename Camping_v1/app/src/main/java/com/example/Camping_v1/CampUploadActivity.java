@@ -17,7 +17,7 @@ import com.example.Camping_v1.R;
 
 import java.io.InputStream;
 
-public class AddPhotoActivity extends AppCompatActivity {
+public class CampUploadActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 0;
     private ImageView addphoto_image;

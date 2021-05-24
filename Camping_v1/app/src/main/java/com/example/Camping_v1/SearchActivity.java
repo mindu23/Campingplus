@@ -11,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.Camping_v1.R;
-
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
@@ -20,7 +18,7 @@ public class SearchActivity extends AppCompatActivity {
     private List<String> list;          // 데이터를 넣은 리스트변수
     ListView listView = null;          // 검색을 보여줄 리스트변수
     private EditText editTextFilter;        // 검색어를 입력할 Input 창
-    private ListViewAdapter adapter;      // 리스트뷰에 연결할 아답터
+    private ListViewControl adapter;      // 리스트뷰에 연결할 아답터
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +28,7 @@ public class SearchActivity extends AppCompatActivity {
         // 리스트의 모든 데이터를 arraylist에 복사한다.// list 복사본을 만든다.
 
         // 리스트에 연동될 아답터를 생성한다.
-        adapter = new ListViewAdapter();
+        adapter = new ListViewControl();
         listView = (ListView) findViewById(R.id.listView);
 
         // 리스트뷰에 아답터를 연결한다.
@@ -60,7 +58,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String filterText = editable.toString() ;
-                ((ListViewAdapter)listView.getAdapter()).getFilter().filter(filterText);
+                ((ListViewControl)listView.getAdapter()).getFilter().filter(filterText);
             }
         });
 

@@ -15,16 +15,16 @@ import com.example.Camping_v1.R;
 
 import java.util.ArrayList;
 
-public class ListViewAdapter extends BaseAdapter implements Filterable {
+public class ListViewControl extends BaseAdapter implements Filterable {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList. (원본 데이터 리스트)
-    private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
+    private ArrayList<ListViewData> listViewItemList = new ArrayList<ListViewData>() ;
     // 필터링된 결과 데이터를 저장하기 위한 ArrayList. 최초에는 전체 리스트 보유.
-    private ArrayList<ListViewItem> filteredItemList = listViewItemList ;
+    private ArrayList<ListViewData> filteredItemList = listViewItemList ;
 
     Filter listFilter ;
 
     // ListViewAdapter의 생성자
-    public ListViewAdapter() {
+    public ListViewControl() {
 
     }
 
@@ -61,7 +61,7 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         TextView descTextView = (TextView) convertView.findViewById(R.id.textView2) ;
 
         // Data Set(filteredItemList)에서 position에 위치한 데이터 참조 획득
-        ListViewItem listViewItem = filteredItemList.get(position);
+        ListViewData listViewItem = filteredItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         iconImageView.setImageDrawable(listViewItem.getIcon());
@@ -72,7 +72,7 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
     }
 
     public void addItem(Drawable icon, String title, String desc) {
-        ListViewItem item = new ListViewItem();
+        ListViewData item = new ListViewData();
 
         item.setIcon(icon);
         item.setTitle(title);
@@ -100,9 +100,9 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
                 results.values = listViewItemList ;
                 results.count = listViewItemList.size() ;
             } else {
-                ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>() ;
+                ArrayList<ListViewData> itemList = new ArrayList<ListViewData>() ;
 
-                for (ListViewItem item : listViewItemList) {
+                for (ListViewData item : listViewItemList) {
                     if (item.getTitle().toUpperCase().contains(constraint.toString().toUpperCase()) ||
                             item.getDesc().toUpperCase().contains(constraint.toString().toUpperCase()))
                     {
@@ -120,7 +120,7 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
             // update listview by filtered data list.
-            filteredItemList = (ArrayList<ListViewItem>) results.values ;
+            filteredItemList = (ArrayList<ListViewData>) results.values ;
 
             // notify
             if (results.count > 0) {
