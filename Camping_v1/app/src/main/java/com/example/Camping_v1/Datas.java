@@ -10,6 +10,7 @@ class UserData {
     //String UserPasswordCheck;
     String USerEmail;
     String UserPhoneNum;
+    Boolean Admin;
 
 
     //put
@@ -20,6 +21,7 @@ class UserData {
         //putUserPasswordCheck(user.UserPasswordCheck);
         putUserEmail(user.USerEmail);
         putUserPhoneNum(user.UserPhoneNum);
+        putAdmin(user.Admin);
     }
     public void putUserName(String Name){
         UserName=Name;
@@ -33,6 +35,7 @@ class UserData {
     public  void putUserPassword(String Password){
         UserPassword = Password;
     }
+    public void putAdmin(Boolean admin){Admin = admin;}
     //public  void putUserPasswordCheck(String PasswordCheck){
     //    UserPasswordCheck = PasswordCheck;
     //}

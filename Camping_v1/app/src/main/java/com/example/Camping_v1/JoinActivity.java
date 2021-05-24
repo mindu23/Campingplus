@@ -11,6 +11,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,10 @@ public class JoinActivity extends AppCompatActivity {
     private EditText mEditTextPassword;
     private EditText mEditTextPasswordCheck;
     private EditText mEditTextEmail;
+    private EditText mEditTextPhone;
+    private CheckBox mEditCheckBoxHost;
+
+
     private TextView mTextViewResult;
 
 
@@ -61,6 +66,9 @@ public class JoinActivity extends AppCompatActivity {
         mEditTextPassword = (EditText)findViewById(R.id.editText_join_password);
         mEditTextPasswordCheck = (EditText)findViewById(R.id.editText_join_passwordChek);
         mEditTextEmail = (EditText)findViewById(R.id.editText_join_email);
+        mEditTextPhone = (EditText)findViewById(R.id.editText_join_phone);
+        mEditCheckBoxHost = (CheckBox) findViewById(R.id.checkbox_host);
+
 
         mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
 
@@ -79,6 +87,15 @@ public class JoinActivity extends AppCompatActivity {
                 String joinPassword = mEditTextPassword.getText().toString();
                 String joinPasswordCheck = mEditTextPasswordCheck.getText().toString();
                 String joinEmail = mEditTextEmail.getText().toString();
+                String joinPhone = mEditTextPhone.getText().toString();
+                Boolean joinCheckBox = mEditCheckBoxHost.isChecked();
+                String joinCheckBoxHost;
+                if(joinCheckBox == Boolean.TRUE) {
+                    joinCheckBoxHost = "1";
+                }
+                else{
+                    joinCheckBoxHost = "0";
+                }
 
 
                 joinName = joinName.trim();
@@ -96,7 +113,7 @@ public class JoinActivity extends AppCompatActivity {
                     Toast.makeText(JoinActivity.this, "회원가입 완료", Toast.LENGTH_SHORT).show();
 
                     InsertData task = new InsertData();
-                    task.execute("http://" + IP_ADDRESS + Insert, joinName, joinId, joinPassword, joinEmail);
+                    task.execute("http://" + IP_ADDRESS + Insert, joinName, joinId, joinPassword, joinEmail, joinPhone, joinCheckBoxHost);
                     Intent intentMain = new Intent(JoinActivity.this, LoginActivity.class);
                     startActivity(intentMain);
 
@@ -156,10 +173,12 @@ public class JoinActivity extends AppCompatActivity {
             String id= (String)params[2];
             String password= (String)params[3];
             String email= (String)params[4];
+            String phone= (String)params[5];
+            String host = (String)params[6];
 
             String serverURL = (String)params[0];
 
-            String postParameters = "name=" + name + "&id=" + id + "&password=" + password + "&email=" + email;
+            String postParameters = "name=" + name + "&id=" + id + "&password=" + password + "&email=" + email + "&phone=" + phone + "&host=" + host;
 
             try {
 
