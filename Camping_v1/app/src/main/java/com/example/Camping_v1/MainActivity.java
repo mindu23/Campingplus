@@ -58,10 +58,14 @@ public class MainActivity extends AppCompatActivity {
             menuInflater.inflate(R.menu.main_menu, menu);
             //System.out.println("userNum is "+ intent.getStringExtra("UserNum"));
         }
-        else{
+        else if(userData.getHost() == "0"){
             MenuInflater menuInflater = getMenuInflater();
             menuInflater.inflate(R.menu.login_menu, menu);
             //System.out.println("userNum is "+ intent.getStringExtra("UserNum"));
+        }
+        else{
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.login_host_menu, menu);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -86,11 +90,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(searchIntent);
                 break;
             case R.id.btn_myPage:
-                Toast.makeText(this, "myMenu button click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "myPage button click", Toast.LENGTH_SHORT).show();
                 Intent myMenuIntent = new Intent(this, MainActivity.class);
                 //Intent intent = getIntent();
                 //String UserNum = intent.getExtras().getString("UserNum");
                 myMenuIntent.putExtra("UserNum", userData.getUserNum());
+
                 startActivity(myMenuIntent);
                 break;
             case R.id.btn_logout:
@@ -101,11 +106,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btn_list_host:
                 Toast.makeText(this, "list button click", Toast.LENGTH_SHORT).show();
                 Intent ListIntent = new Intent(this, MainActivity.class);
+                ListIntent.putExtra("UserNum", userData.getUserNum());
                 startActivity(ListIntent);
                 break;
             case R.id.btn_myPage_host:
                 Toast.makeText(this, "myPage button click", Toast.LENGTH_SHORT).show();
                 Intent myPageHostIntent = new Intent(this, MainActivity.class);
+                myPageHostIntent.putExtra("UserNum", userData.getUserNum());
                 startActivity(myPageHostIntent);
                 break;
         }

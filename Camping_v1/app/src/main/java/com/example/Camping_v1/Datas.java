@@ -15,18 +15,11 @@ class UserData {
 
 
     //put
-    public void putUserData(UserData user){
-        putUserName(user.UserName);
-        putUserId(user.UserId);
-        putUserPassword(user.UserPassword);
-        putUserEmail(user.UserEmail);
-        putUserPhoneNum(user.UserPhoneNum);
-        putAdmin(user.Host);
-    }
 
-    public void putUserData(JSONObject jsonObject){
+    public UserData putUserData(JSONObject jsonObject){
         try {
             UserName = jsonObject.getString( "UserName" );
+            UserNum = jsonObject.getString( "UserNum" );
             UserId = jsonObject.getString( "UserId" );
             UserPassword = jsonObject.getString( "UserPwd" );
             UserEmail = jsonObject.getString( "UserEmail" );
@@ -36,6 +29,8 @@ class UserData {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return this;
 
     }
     public UserData getUserData(){
@@ -78,7 +73,7 @@ class UserData {
         return UserEmail;
     }
     public String getUserPhoneNum() { return UserPhoneNum;}
-    public String getAdmin(){return Host;}
+    public String getHost(){return Host;}
 }
 
 
