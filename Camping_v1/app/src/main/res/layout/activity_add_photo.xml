@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".JoinActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/addphoto_image"
+            app:srcCompat="@drawable/camp_pic"
+            android:layout_width="350dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <EditText
+            android:id="@+id/editText_camp_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:ems="10"
+            android:hint="캠핑장 이름"
+            android:inputType="textPersonName"
+            android:layout_gravity="right"/>
+
+        <EditText
+            android:id="@+id/editText_camp_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="24dp"
+            android:ems="10"
+            android:layout_gravity="right"
+            android:hint="주소"
+            android:inputType="textPassword"/>
+
+
+        <EditText
+            android:id="@+id/editText_camp_phonnum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="24dp"
+            android:ems="10"
+            android:layout_gravity="right"
+            android:hint="전화번호"
+            android:inputType="textPassword"/>
+
+        <EditText
+            android:id="@+id/editText_camp_kakaotalk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="24dp"
+            android:ems="10"
+            android:layout_gravity="right"
+            android:hint="카톡 아이디"
+            android:inputType="textEmailAddress"/>
+
+        <EditText
+            android:id="@+id/editText_camp_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="24dp"
+            android:ems="10"
+            android:layout_gravity="right"
+            android:hint="계좌번호"
+            android:inputType="textEmailAddress"/>
+
+        <EditText
+            android:id="@+id/editText_camp_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="24dp"
+            android:ems="10"
+            android:layout_gravity="right"
+            android:hint="추가사항"
+            android:inputType="textEmailAddress"/>
+
+        <EditText
+            android:id="@+id/editText_camp_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="24dp"
+            android:ems="10"
+            android:layout_gravity="right"
+            android:hint="입실/퇴실 시간"
+            android:inputType="textEmailAddress"/>
+
+        <Button
+            android:id="@+id/check_button"
+            style="@style/defaultButton"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="캠핑장 업로드"
+            app:layout_constraintBaseline_toBaselineOf="@+id/editText_join_id"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </LinearLayout>
+
+
+
+
+</ScrollView>
