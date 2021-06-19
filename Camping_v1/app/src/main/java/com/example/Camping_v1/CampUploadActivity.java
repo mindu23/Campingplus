@@ -1,184 +1,147 @@
 package com.example.Camping_v1;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.Camping_v1.R;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPReply;
-
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.SocketException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CampUploadActivity extends AppCompatActivity {
+    //캠핑장 관리자가 캠핑장을 업로드하는 화면
+    private static String IP_ADDRESS = "117.16.46.95:8080";
+    private static String CampUpload = "/campDataInsert.php";
 
-    private static final int REQUEST_CODE = 0;
-    private ImageView addphoto_image;
-    private Button button_camp_upload;
-    private File tempFile;
+    private static final int REQUEST_CODE = 21;
+    private ImageView image_addphoto;
+    private Bitmap bitmapimg;
+
+    private EditText CampName;
+    private EditText CampAddress;
+    private EditText CampPhone;
+    private EditText CampKakao;
+    private EditText AccountNum;
+    private EditText CampTime;
+    private EditText CampExtra;
+    private EditText CampCost;
+    UserData userData = new UserData();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_photo);
+        setContentView(R.layout.activity_camp_upload);
 
-        addphoto_image = findViewById(R.id.addphoto_image);
-        addphoto_image.setOnClickListener(new View.OnClickListener() {
+        Intent intent = getIntent();
+        userData.putUserNum(intent.getStringExtra("UserNum"));
+        userData.putUserName(intent.getStringExtra("UserName"));
+        userData.putUserEmail(intent.getStringExtra("UserEmail"));
+        userData.putUserPhoneNum(intent.getStringExtra("UserPhone"));
+        userData.putAdmin(intent.getStringExtra("Host"));
+
+        CampName = (EditText)findViewById(R.id.editText_CampName);
+        CampAddress = (EditText)findViewById(R.id.editText_CampAddress);
+        CampPhone = (EditText)findViewById(R.id.editText_CampPhone);
+        CampKakao = (EditText)findViewById(R.id.editText_CampKakao);
+        AccountNum = (EditText)findViewById(R.id.editText_AccountNum);
+        CampTime = (EditText)findViewById(R.id.editText_CampTime);
+        CampCost = (EditText)findViewById(R.id.editText_CampCost);
+        CampExtra = (EditText)findViewById(R.id.editText_CampExtra);
+
+        image_addphoto = findViewById(R.id.image_addphoto);
+        image_addphoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, REQUEST_CODE);
-                tempFile = getImage(REQUEST_CODE, intent);
-
             }
         });
-
-        button_camp_upload = findViewById(R.id.camp_upload_button);
-        button_camp_upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                FTPServerData imageServer = new FTPServerData();
-                //CampUploadControl ftp_ivr = new CampUploadControl();
-                boolean result = false;
-                try {
-                    result = upload(tempFile, imageServer.getFTPServerData());
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                System.out.println("FTP result : " + result);
-
-
-            }
-        });
-
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK && data.getData()!= null) {
+                Uri path = data.getData();
                 try {
-                    InputStream in = getContentResolver().openInputStream(data.getData());
+                    //InputStream in = getContentResolver().openInputStream(path);
+                    bitmapimg = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
+                    image_addphoto.setImageBitmap(bitmapimg);
+                    //in.close();
 
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
-
-                    addphoto_image.setImageBitmap(img);
-                } catch (Exception e) {
-
+                    //addphoto_image.setImageBitmap(bitmapimg);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
         }
     }
+    protected void uploadImage() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmapimg.compress(Bitmap.CompressFormat.JPEG, 75, byteArrayOutputStream);
+        byte[] imageInByte = byteArrayOutputStream.toByteArray();
 
-    public File getImage(int requestCode, Intent data) {
-        File tempFile = null;
+        String encodedImage = Base64.encodeToString(imageInByte, Base64.DEFAULT);
+        //Toast.makeText(this, encodedImgae,Toast.LENGTH_SHORT).show();
+        Call<ResponsePOJO> call = Client.getInstancce().getApi().uploadImage(encodedImage);
+        call.enqueue(new Callback<ResponsePOJO>() {
+            @Override
+            public void onResponse(Call<ResponsePOJO> call, Response<ResponsePOJO> response) {
+                Toast.makeText(CampUploadActivity.this, response.body().getRemarks(), Toast.LENGTH_SHORT).show();
 
-        if (requestCode == 1) {
+                if (response.body().isStatus()) {
 
-            Uri photoUri = data.getData();
+                } else {
 
-            Cursor cursor = null;
-
-            try {
-
-                /*
-                 *  Uri 스키마를
-                 *  content:/// 에서 file:/// 로  변경한다.
-                 */
-                String[] proj = {MediaStore.Images.Media.DATA};
-
-                assert photoUri != null;
-                cursor = getContentResolver().query(photoUri, proj, null, null, null);
-
-                assert cursor != null;
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-                cursor.moveToFirst();
-
-                tempFile = new File(cursor.getString(column_index));
-                System.out.println(tempFile);
-
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
                 }
             }
-            setImage();
-        }
-        return tempFile;
+
+            @Override
+            public void onFailure(Call<ResponsePOJO> call, Throwable t) {
+                Toast.makeText(CampUploadActivity.this, "Network Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    protected void uploadCampData(){
+
     }
 
-    private void setImage() {
+    public void onClick_upload_camp(View view){
+        String campName = CampName.getText().toString();
+        String campAddress = CampAddress.getText().toString();
+        String campPhone = CampPhone.getText().toString();
+        String campKakao = CampKakao.getText().toString();
+        String accountNum = AccountNum.getText().toString();
+        String campTime = CampTime.getText().toString();
+        String campCost = CampCost.getText().toString();
+        String campExtra = CampExtra.getText().toString();
 
-        ImageView imageView = findViewById(R.id.addphoto_image);
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
-
-        imageView.setImageBitmap(originalBm);
-
-    }
-    public boolean upload(File org, FTPServerData serverData)
-            throws SocketException, IOException, Exception {
-
-        FileInputStream fis = null;
-
-        org.apache.commons.net.ftp.FTPClient clnt = new org.apache.commons.net.ftp.FTPClient();
-        clnt.setControlEncoding("utf-8");
-
-        try {
-            clnt.connect(serverData.getfServerIp());
-            //clnt.setBufferSize(1024*1024);
-            int reply = clnt.getReplyCode();
-            if (!FTPReply.isPositiveCompletion(reply)) {
-                throw new Exception("ftp connection refused");
-            }
-
-            clnt.setSoTimeout(1000 * 10);
-            clnt.login(serverData.getfServerId(), serverData.getfSserverPassword());
-            clnt.setFileType(FTP.BINARY_FILE_TYPE);
-
-
-            clnt.enterLocalActiveMode();
-
-            //clnt.enterLocalPassiveMode();
-            //clnt.changeWorkingDirectory(defaultPath);
-            //clnt.makeDirectory("");
-
-            fis = new FileInputStream(org);
-            return clnt.storeFile(serverData.getfServerPath(), fis);
-        }
-        finally {
-            if (clnt.isConnected()) {
-                clnt.disconnect();
-            }
-            if (fis != null) {
-                fis.close();
-            }
-        }
+        CampUploadControl task = new CampUploadControl();
+        //InsertDataControl task = new InsertDataControl();
+        System.out.println(userData.getUserNum());
+        task.execute("http://" + IP_ADDRESS + CampUpload, userData.getUserNum(),campName, campAddress, campPhone,campKakao, accountNum, campTime, campExtra, campCost);
+        uploadImage();
+        Intent intent = new Intent(CampUploadActivity.this, CampInformationHostActivity.class);
+        startActivity(intent);
     }
 }

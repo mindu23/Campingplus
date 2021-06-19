@@ -3,6 +3,7 @@ package com.example.Camping_v1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -38,12 +39,15 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //get TextView's Text
-                String strText = (String)parent.getItemAtPosition(position);
+                //String strText = (String)parent.getItemAtPosition(position);
 
+                //데이터 가지고 캠핑장 세부 내용 보여주기
+                Intent intent = new Intent(SearchActivity.this, CampInformationUserActivity.class);
+                startActivity(intent);
             }
         });
 
-        editTextFilter = (EditText) findViewById(R.id.editTextFilter);
+        editTextFilter = (EditText) findViewById(R.id.editText_Search_filder);
         // input창에 검색어를 입력시 "addTextChangedListener" 이벤트 리스너를 정의한다.
         editTextFilter.addTextChangedListener(new TextWatcher() {
             @Override

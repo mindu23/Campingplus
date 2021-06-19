@@ -11,15 +11,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     ViewPager viewPager;
-    Button button_image_load;
+    ImageView imageView;
+    String Test;
+    Button go_host_camp;
 
     //userdata 선언
     UserData userData = new UserData();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,20 @@ public class MainActivity extends AppCompatActivity {
         //ab.setDisplayHomeAsUpEnabled(true);
         ab.setDisplayShowCustomEnabled(true);
 
+        go_host_camp = findViewById(R.id.go_host_camp);
+        go_host_camp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CampInformationHostActivity.class);
+                startActivity(intent);
+            }
+        });
+
         viewPager = (ViewPager)findViewById(R.id.viewPager);
+        imageView = findViewById(R.id.image_addphoto);
+
+        //이미지 업로드
+        sendImageRequest(imageView, "http://117.16.46.95:8080/campImage/test.jpg");
 
         MainViewPageControl viewPagerAdapter = new MainViewPageControl(this);
         viewPager.setAdapter(viewPagerAdapter);
@@ -39,35 +56,37 @@ public class MainActivity extends AppCompatActivity {
         //userdata 받아오기 Intenet에서
         Intent intent = getIntent();
         userData.putUserNum(intent.getStringExtra("UserNum"));
-
-        button_image_load = findViewById(R.id.button_image_load);
-        button_image_load.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CampUploadActivity.class);
-                startActivity(intent);
-            }
-        });
+        userData.putUserName(intent.getStringExtra("UserName"));
+        userData.putUserEmail(intent.getStringExtra("UserEmail"));
+        userData.putUserPhoneNum(intent.getStringExtra("UserPhone"));
+        userData.putAdmin(intent.getStringExtra("Host"));
+        Test = userData.getHost();
+        System.out.println(Test);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
 
-        if(userData.getUserNum() == null || userData.getUserNum() == "0") {
+        if(userData.getUserNum() == null || userData.getUserNum().equals("0")) {
             MenuInflater menuInflater = getMenuInflater();
             menuInflater.inflate(R.menu.main_menu, menu);
             //System.out.println("userNum is "+ intent.getStringExtra("UserNum"));
         }
-        else if(userData.getHost() == "0"){
+        else if(Test.equals("1")){
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.login_host_menu, menu);
+        }
+        else{
             MenuInflater menuInflater = getMenuInflater();
             menuInflater.inflate(R.menu.login_menu, menu);
             //System.out.println("userNum is "+ intent.getStringExtra("UserNum"));
         }
-        else{
-            MenuInflater menuInflater = getMenuInflater();
-            menuInflater.inflate(R.menu.login_host_menu, menu);
-        }
         return super.onCreateOptionsMenu(menu);
+    }
+//이미지 업로드 (이걸 함수에 넣을 수 있을까??)
+    public void sendImageRequest(ImageView imageView, String url){
+        ImageLoadControl task = new ImageLoadControl(url, imageView);
+        task.execute();
     }
 
     @Override
@@ -105,13 +124,17 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_list_host:
                 Toast.makeText(this, "list button click", Toast.LENGTH_SHORT).show();
-                Intent ListIntent = new Intent(this, MainActivity.class);
-                ListIntent.putExtra("UserNum", userData.getUserNum());
+                Intent ListIntent = new Intent(this, CampListActivity.class);
+                ListIntent.putExtra( "UserNum", userData.getUserNum());
+                ListIntent.putExtra( "UserName", userData.getUserName());
+                ListIntent.putExtra( "UserEmail", userData.getUserEmail());
+                ListIntent.putExtra( "UserPhoneNum", userData.getUserPhoneNum());
+                ListIntent.putExtra( "Host", userData.getHost());
                 startActivity(ListIntent);
                 break;
             case R.id.btn_myPage_host:
                 Toast.makeText(this, "myPage button click", Toast.LENGTH_SHORT).show();
-                Intent myPageHostIntent = new Intent(this, MainActivity.class);
+                Intent myPageHostIntent = new Intent(this, MyPageHostActivity.class);
                 myPageHostIntent.putExtra("UserNum", userData.getUserNum());
                 startActivity(myPageHostIntent);
                 break;

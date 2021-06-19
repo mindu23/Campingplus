@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchActivity">
+    tools:context=".CampListActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,23 +14,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_marginRight="8dp"
-            android:id="@+id/textView1"
-            android:text="캠핑장 이름 혹은 주소를 입력하세요" />
-
-        <EditText
-            android:id="@+id/editText_Search_filder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="검색어를 입력하세요."/>
+            android:text="목록>"
+            android:textSize="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"/>
 
         <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/camp_listView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:textFilterEnabled="true">
         </ListView>
+
+        <Button
+            android:id="@+id/button_camp_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50dp"
+            android:onClick="onClick_camp_add"
+            android:text="+"/>
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

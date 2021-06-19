@@ -1,7 +1,6 @@
 package com.example.Camping_v1;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,27 +11,43 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CampUploadControl extends AsyncTask<String, Void, String> {
+
+//joinActivity
+class InsertDataControl extends AsyncTask<String, Void, String> {
     ProgressDialog progressDialog;
     private static String TAG = "test";
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        //progressDialog = ProgressDialog.show(JoinActivity.this,
+               // "Please Wait", null, true, true);
+    }
+
+
+    @Override
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+
+        //progressDialog.dismiss();
+        //Log.d(TAG, "POST response  - " + result);
+    }
+
+
     @Override
     protected String doInBackground(String... params) {
 
-        String userNum = (String) params[1];
-        String campName = (String) params[2];
-        String campAddress = (String) params[3];
-        String campPhone = (String) params[4];
-        String campKakao = (String) params[5];
-        String accountNum = (String) params[6];
-        String campTime = (String) params[7];
-        String campExtra = (String) params[8];
-        String campCost = (String) params[9];
+        String name = (String)params[1];
+        String id= (String)params[2];
+        String password= (String)params[3];
+        String email= (String)params[4];
+        String phone= (String)params[5];
+        String host = (String)params[6];
 
-        String serverURL = (String) params[0];
-        //campName, campAddress, campPhone,campKakao, accountNum, campTime, campCost, campExtra);
+        String serverURL = (String)params[0];
 
-        //host num 추가해야함
-        String postParameters = "userNum=" + userNum + "&name=" + campName + "&address=" + campAddress + "&phone=" + campPhone + "&kakao=" + campKakao + "&account=" + accountNum + "&time=" + campTime + "&extra=" + campExtra + "&price=" + campCost;
+        String postParameters = "name=" + name + "&id=" + id + "&password=" + password + "&email=" + email + "&phone=" + phone + "&host=" + host;
 
         try {
 
@@ -58,9 +73,10 @@ public class CampUploadControl extends AsyncTask<String, Void, String> {
             Log.d(TAG, "POST response code - " + responseStatusCode);
 
             InputStream inputStream;
-            if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+            if(responseStatusCode == HttpURLConnection.HTTP_OK) {
                 inputStream = httpURLConnection.getInputStream();
-            } else {
+            }
+            else{
                 inputStream = httpURLConnection.getErrorStream();
             }
 
@@ -71,7 +87,7 @@ public class CampUploadControl extends AsyncTask<String, Void, String> {
             StringBuilder sb = new StringBuilder();
             String line = null;
 
-            while ((line = bufferedReader.readLine()) != null) {
+            while((line = bufferedReader.readLine()) != null){
                 sb.append(line);
             }
 

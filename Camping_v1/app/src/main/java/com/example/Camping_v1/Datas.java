@@ -1,6 +1,5 @@
 package com.example.Camping_v1;
 
-import android.provider.ContactsContract;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,9 +13,7 @@ class UserData {
     String Host;
 
 
-    //put
-
-    public UserData putUserData(JSONObject jsonObject){
+    public void putUserData(JSONObject jsonObject){
         try {
             UserName = jsonObject.getString( "UserName" );
             UserNum = jsonObject.getString( "UserNum" );
@@ -29,10 +26,8 @@ class UserData {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        return this;
-
     }
+
     public UserData getUserData(){
         return this;
     }
@@ -69,7 +64,7 @@ class UserData {
     public String getUserPassword(){
         return UserPassword;
     }
-    public String getUSerEmail(){
+    public String getUserEmail(){
         return UserEmail;
     }
     public String getUserPhoneNum() { return UserPhoneNum;}
@@ -87,8 +82,102 @@ class CampUploadData{
     String AccountNum;
     String CampTime;
     String CampExtra;
-}
+    String CampCost;
+    String Imagepath;
 
+    public CampUploadData putCampUploadData(JSONObject jsonObject){
+        try {
+            CampNum = jsonObject.getString("campNum");
+            HostNum = jsonObject.getString("hostNum");
+            CampName = jsonObject.getString("campName");
+            CampAddress = jsonObject.getString("campAddress");
+            CampPhone = jsonObject.getString("campPhone");
+            CampKakao = jsonObject.getString("campKakao");
+            AccountNum = jsonObject.getString("campAccount");
+            CampTime = jsonObject.getString("campTime");
+            CampExtra = jsonObject.getString("campExtra");
+            CampCost = jsonObject.getString("campPrice");
+            Imagepath = jsonObject.getString("imagepath");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return this;
+
+    }
+
+    public CampUploadData getCampUploadData(){
+        return this;
+    }
+    public void putCampNum(String CNum){
+        CampNum = CNum;
+    }
+    public void putHostNum(String HNum){
+        HostNum = HNum;
+    }
+    public void putCampName(String CName){
+        CampName = CName;
+    }
+    public void putCampAddress(String CAddress){
+        CampAddress = CAddress;
+    }
+    public void putCampPhone(String CPhone){
+        CampPhone = CPhone;
+    }
+    public void putCampKakao(String CKakao){
+        CampKakao = CKakao;
+    }
+    public void putAccountNum(String ANum){AccountNum = ANum;}
+    public void putCampTime(String CTime){CampTime = CTime;}
+    public void putCampExtra(String CExtra){CampExtra = CExtra;}
+    public void putCampCost(String CCost){CampCost = CCost;}
+
+    //get
+    public String getCampNum(){
+        return CampNum;
+    }
+
+    public String getHostNum() {
+        return HostNum;
+    }
+
+    public String getCampName() {
+        return CampName;
+    }
+
+    public String getCampAddress() {
+        return CampAddress;
+    }
+
+    public String getCampPhone() {
+        return CampPhone;
+    }
+
+    public String getCampKakao() {
+        return CampKakao;
+    }
+
+    public String getAccountNum() {
+        return AccountNum;
+    }
+
+    public String getCampTime() {
+        return CampTime;
+    }
+
+    public String getCampExtra() {
+        return CampExtra;
+    }
+
+    public String getCampCost() {
+        return CampCost;
+    }
+    public String getImagepath() {
+        return Imagepath;
+    }
+
+}
 
 
 class ReservationData {
@@ -103,4 +192,5 @@ class ReservationData {
     String date;
     String CampAddress;
     String AccountNum;
+    String CampExtraUse;
 }
